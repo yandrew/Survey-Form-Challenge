@@ -1,6 +1,6 @@
 class SurveysController < ApplicationController
   before_action :set_survey, only: [:show, :edit, :update, :destroy, :answers]
-  
+
 	def index
 		@questions = Question.order(importance: :asc)
 		@user = User.new
@@ -9,15 +9,18 @@ class SurveysController < ApplicationController
 
 	end
 
-	def create
-
-	end
+	def answers
+    @users = User.all
+    @questions = @survey.questions
+  end
 
 	private 
 
-	# def survey_params
-	# 	params.require(:survey).permit(questions_attributes: [:content, :importance, :question_type])
-	# 	params.require(:survey).permit(answers_attributes: :content)
-	# end
+	def survey_params
+    params.require(:survey).permit(:name,
+      :questions_attributes => [:id, :content,
+        :answers_attributes => [:id, :content, :participant_id]
+      ])
+  end
 
 end

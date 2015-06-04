@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
-  get 'survey/index'
+  resources :participants
+  resources :surveys do
+    get 'answers', on: :member
+  end
+  resources :users
 
-  root 'survey#index'
-  resources :survey
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
