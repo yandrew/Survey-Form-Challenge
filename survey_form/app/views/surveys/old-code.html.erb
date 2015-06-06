@@ -1,0 +1,90 @@
+
+	<% @questions.each do |question| %>
+			<% button_type = question.question_type %>
+			<h4> <%= question.importance %>. <%= question.content %> </h4>
+			
+			<% question.answers.each do |answer| %>
+			<%= form_for(@question do |f| %>
+				<div>
+		  <%= f.button_type    %> 
+		  <%= label answer.content %>
+				</div>
+			<% end %>
+	<% end %>
+
+<% end %>
+
+
+
+
+
+
+
+<% @questions.each do |question| %>
+<h4> <%= question.importance %>. <%= question.content %> </h4>
+<%= form_for ([@question, @user.responses.build]) do |f| %>
+  <p>
+    <%= f.label @question.content %><br />
+    
+  </p>
+  <p><%= f.submit "Submit" %></p>
+<% end %>
+
+<% end %>
+
+
+<%= form_for @user do |f| %>
+	<% @questions.each do |question| %>
+	<h4> <%= question.importance %>. <%= question.content %> </h4>
+
+  <ul>
+    <%= f.fields_for :addresses do |addresses_form| %>
+      <li>
+        <%= addresses_form.label :kind %>
+        <%= addresses_form.text_field :kind %>
+ 
+        <%= addresses_form.label :street %>
+        <%= addresses_form.text_field :street %>
+        ...
+      </li>
+      	<% end %>
+    <% end %>
+<% end %>
+
+
+
+
+<%= form_for :survey do |form| %>
+  <%= form.fields_for :question do |question_form| %>
+   <%= question_form.text_field :question %>
+  	<% end %>
+  <%= form.fields_for :answers do |answer_form| %>
+   <%= question_form.text_field :answer %>
+  <% end %>
+  <%= form.submit %>
+<% end %>
+
+
+
+
+
+<h1>Survey</h1>
+	
+	<%= form_tag("/post", method: "post") do |f| %>
+  
+
+		
+	<% @questions.each do |question| %>
+		<h4> <%= question.importance %>. <%= question.content %> </h4>
+		<% question.answers.each do |answer| %>
+		<div>
+		<%= radio_button :response, '#{answer.content}' %>
+
+		<input type="radio"><%= answer.content %></div>
+
+		<% end %>
+	<% end %>
+  <%= submit_tag("Submit") %>
+<% end %>
+
+
