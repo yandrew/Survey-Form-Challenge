@@ -2,11 +2,10 @@ class CreateQuestions < ActiveRecord::Migration
   def change
     create_table :questions do |t|
       t.text :content
+      t.references :survey, index: true, foreign_key: true
       t.integer :importance
-      # t.belongs_to :survey
-
       t.string :question_type
-      t.boolean :gender_question, :default => false
+      t.boolean :gender_question
       t.timestamps null: false
     end
   end

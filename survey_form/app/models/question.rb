@@ -1,8 +1,7 @@
 class Question < ActiveRecord::Base
-	validates :content, presence: true
-	
-	has_many :answers
-	has_many :users, :through => :answers
+	belongs_to :survey
+  has_many :answers
+  has_many :participants, through: :answers
 
-	accepts_nested_attributes_for :answers
+  accepts_nested_attributes_for :answers
 end
